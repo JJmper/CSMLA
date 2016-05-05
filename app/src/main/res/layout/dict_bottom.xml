@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/dict_bottom_zero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_tab_pressed"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/dict_bottom_one"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/dict_bg_color"
+            android:button="@null"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:gravity="center_horizontal"
+            android:text="词典" />
+
+        <RadioButton
+            android:id="@+id/dict_bottom_two"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/dict_bg_color"
+            android:button="@null"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:gravity="center_horizontal"
+            android:text="翻译" />
+
+
+
+
+    </RadioGroup>
+</LinearLayout>

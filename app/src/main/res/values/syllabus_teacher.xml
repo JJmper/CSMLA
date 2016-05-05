@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="syllabus_teacher">
+        <item>赵晓辉</item>
+        <item>莫秀玲</item>
+        <item>曲良东</item>
+        <item>李玲</item>
+        <item>李莉</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple">
+
+        <TextView
+            android:id="@+id/syllabus_ua_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/back"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="返回"
+            android:textColor="@color/orange"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/syllabus_ua_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="10dp"
+            android:text="添加课程"
+            android:textColor="@color/orange"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/syllabus_ua_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="确认"
+            android:textColor="@color/orange"
+            android:textSize="20dp"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/syllabus_linear_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#cbcbcb"
+        android:orientation="vertical"
+        android:padding="0.2px">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="42dp">
+
+            <TextView
+                android:id="@+id/syllabus_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50dp"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:hint="请选择课程"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#ff000000"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#fff"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/syllabus_name_arrow"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/syllabus_top" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/syllabus_linear_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#cbcbcb"
+        android:orientation="vertical"
+        android:padding="0.2px">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="42dp">
+
+            <TextView
+                android:id="@+id/syllabus_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50dp"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:hint="请选择课程教师"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#ff000000"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#fff"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/syllabus_teacher_arrow"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/syllabus_top" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/syllabus_linear_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#cbcbcb"
+        android:orientation="vertical"
+        android:padding="0.2px">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="42dp">
+
+            <TextView
+                android:id="@+id/syllabus_place"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50dp"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:hint="请选择上课地点"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#ff000000"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#fff"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/syllabus_place_arrow"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/syllabus_top" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/syllabus_linear_week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#cbcbcb"
+        android:orientation="vertical"
+        android:padding="0.2px">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="42dp">
+
+            <TextView
+                android:id="@+id/syllabus_week"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50dp"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:hint="请选择上课时间（星期）"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#ff000000"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#fff"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:id="@+id/syllabus_week_arrow"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/syllabus_top" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/syllabus_linear_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#cbcbcb"
+        android:orientation="vertical"
+        android:padding="0.2px">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="42dp">
+
+            <TextView
+                android:id="@+id/syllabus_start"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50dp"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:hint="请选择课程开始时间"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#ff000000"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#fff"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/syllabus_start_arrow"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/syllabus_top" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/syllabus_linear_step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#cbcbcb"
+        android:orientation="vertical"
+        android:padding="0.2px">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="42dp">
+
+            <TextView
+                android:id="@+id/syllabus_step"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50dp"
+                android:background="#fff"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:hint="请选择课程结束时间"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#ff000000"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="#fff"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/syllabus_step_arrow"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/syllabus_top" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

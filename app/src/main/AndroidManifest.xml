@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jlu.edu.csmla"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application
+        android:name="utils.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Light.NoTitleBar">
+        <activity
+            android:name="com.jlu.edu.Splash.SplashActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.jlu.edu.register.RegisterActivity" />
+        <activity android:name="com.jlu.edu.register.LoginActivity" />
+        <activity android:name="com.jlu.edu.register.Register_school" />
+        <activity android:name="com.jlu.edu.register.ClassifyActivity" />
+        <activity android:name="com.jlu.edu.register.ForgetPassword" />
+        <activity android:name="com.jlu.edu.main.MainActivity" />
+        <activity android:name="com.jlu.edu.interest.InterestActivity" />
+        <activity android:name="com.jlu.edu.interest.SendMessageActivity" />
+        <activity android:name="com.jlu.edu.dictionary.DictionaryActivity" />
+        <activity android:name="com.jlu.edu.personalspace.wordbook.WordsBookActivity" />
+        <activity android:name="com.jlu.edu.personalspace.wordbook.WordsDetailsActivity" />
+        <activity android:name="com.jlu.edu.pedometer.activity.PedometerActivity" />
+        <activity android:name="com.jlu.edu.pedometer.activity.HistoryActivity" />
+        <activity android:name="com.jlu.edu.syllabus.activity.SyllabusActivity" />
+        <activity android:name="com.jlu.edu.syllabus.activity.UpdateOrAddSyllabusActivity" />
+        <activity android:name="com.jlu.edu.personalspace.personalmessage.PersonalMessage" />
+        <activity android:name="com.jlu.edu.personalspace.pedometer.PedometerSetting" />
+        <activity android:name="com.jlu.edu.personalspace.feedback.FeedBackActivity" />
+        <activity android:name="com.jlu.edu.personalspace.aboutus.AboutUsActivity" />
+        <activity android:name="com.jlu.edu.personalspace.statistics.StatisticsActivity" />
+        <activity android:name="com.jlu.edu.personalspace.statistics.StatisticsDetailsActivity" />
+        <activity android:name="com.jlu.edu.mail.activity.LoginMailsActivity" />
+        <activity android:name="com.jlu.edu.mail.activity.PublicMailsActivity" />
+        <activity android:name="com.jlu.edu.mail.activity.MailsActivity" />
+        <activity android:name="com.jlu.edu.mail.activity.MailsBoxActivity" />
+        <activity android:name="com.jlu.edu.mail.activity.MailsBoxDetailsActivity" />
+        <activity android:name="com.jlu.edu.personalspace.upload.UploadActivity" />
+        <activity android:name="com.jlu.edu.personalspace.upload.FinishingActivity" />
+        <activity android:name="com.jlu.edu.mail.activity.AttachmentDownloadActivity"/>
+        <!--服务-->
+        <service android:name="com.jlu.edu.pedometer.service.StepService" />
+        <service android:name="com.jlu.edu.syllabus.service.TimerService" />
+        <service android:name="com.jlu.edu.pedometer.service.SaveService" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+
+            <!--
+          		<intent-ilter>
+				<action android:name="com.baidu.location.service_v2.9"></action>
+			</intent-filter>
+            -->
+        </service>
+    </application>
+
+</manifest>

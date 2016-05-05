@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/main_bottom_zero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/chartreuse"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <RadioButton
+            android:id="@+id/main_bottom_one"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:drawableTop="@drawable/bottom_one"
+            android:gravity="center_horizontal"
+            android:text="点名啦" />
+
+        <RadioButton
+            android:id="@+id/main_bottom_two"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:drawableTop="@drawable/bottom_two"
+            android:gravity="center_horizontal"
+            android:text="好好学习" />
+
+        <RadioButton
+            android:id="@+id/main_bottom_three"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:drawableTop="@drawable/bottom_three"
+            android:gravity="center_horizontal"
+            android:text="天天向上" />
+
+        <RadioButton
+            android:id="@+id/main_bottom_four"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:drawableTop="@drawable/bottom_four"
+            android:gravity="center_horizontal"
+            android:text="私人空间" />
+
+
+    </RadioGroup>
+</LinearLayout>

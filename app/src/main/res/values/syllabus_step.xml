@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="syllabus_step_1">
+        <item>09:40</item>
+        <item>10:45</item>
+        <item>11:40</item>
+    </string-array>
+    <string-array name="syllabus_step_2">
+        <item>10:45</item>
+        <item>11:40</item>
+    </string-array>
+    <string-array name="syllabus_step_3">
+        <item>11:40</item>
+    </string-array>
+    <string-array name="syllabus_step_4">
+        <item>15:10</item>
+        <item>16:15</item>
+        <item>17:10</item>
+    </string-array>
+    <string-array name="syllabus_step_5">
+        <item>16:15</item>
+        <item>17:10</item>
+    </string-array>
+    <string-array name="syllabus_step_6">
+        <item>17:10</item>
+    </string-array>
+    <string-array name="syllabus_step_7">
+        <item>19:40</item>
+        <item>20:45</item>
+    </string-array>
+</resources>

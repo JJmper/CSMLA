@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="syllabus_name">
+        <item>计算机网络</item>
+        <item>通信原理</item>
+        <item>移动通信原理</item>
+        <item>无线通信原理</item>
+        <item>单片机</item>
+        <item>高等数学</item>
+        <item>大学英语</item>
+        <item>大学物理</item>
+        <item>体育</item>
+        <item>大学化学</item>
+        <item>程序设计与编程</item>
+        <item>信息论</item>
+    </string-array>
+
+
+</resources>

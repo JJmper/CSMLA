@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner">
+        <item>通信工程学院</item>
+        <item>化学学院</item>
+        <item>软件工程学院</item>
+        <item>计算机学院</item>
+    </string-array>
+</resources>

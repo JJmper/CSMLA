@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="syllabus_place">
+        <item>一教一阶</item>
+        <item>一教二阶</item>
+        <item>一教三阶</item>
+        <item>一教四阶</item>
+        <item>一教五阶</item>
+        <item>一教六阶</item>
+        <item>一教七阶</item>
+        <item>一教八阶</item>
+        <item>一教九阶</item>
+        <item>3101</item>
+        <item>3103</item>
+        <item>3201</item>
+        <item>3203</item>
+        <item>3305</item>
+        <item>3301</item>
+        <item>3303</item>
+        <item>3401</item>
+        <item>3403</item>
+        <item>3501</item>
+        <item>3503</item>
+        <item>3505</item>
+        <item>3601</item>
+    </string-array>
+
+
+</resources>
