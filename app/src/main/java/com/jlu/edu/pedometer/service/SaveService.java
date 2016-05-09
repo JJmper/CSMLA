@@ -8,18 +8,16 @@ import android.os.Message;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import SQLite.MySQLiteImpl;
 import utils.ChangeType;
 
 public class SaveService extends Service {
     private int S_step;
-    private SimpleDateFormat sdf1;
-    private SimpleDateFormat sdf2;
     private String time;
     private String today;
     private MySQLiteImpl mySQLiteImpl;
-    private String yestoday;
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -41,8 +39,8 @@ public class SaveService extends Service {
 
 
     private void init() {
-        sdf1 = new SimpleDateFormat("yyyyMMdd");
-        sdf2 = new SimpleDateFormat("hhmmss");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd", Locale.CHINESE);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("hhmmss",Locale.CHINESE);
         Date date = new Date();
         today = sdf1.format(date);
         time = sdf2.format(date);
@@ -73,18 +71,18 @@ public class SaveService extends Service {
             if (!"000000".equals(time)) {
                 return;
             }
-            yestoday = String.valueOf(Integer.valueOf(today) - 1);
+          String  yestoday = String.valueOf(Integer.valueOf(today) - 1);
 
-                if (mySQLiteImpl.isPedometerData(String.valueOf(Integer.valueOf(today) - 1))) {
-                    if (ChangeType.change_S_I(mySQLiteImpl.recePedometerData(yestoday).get("step"))<=StepDetector.CURRENT_SETP){
-                        S_step=StepDetector.CURRENT_SETP;
-                    }else{
-                        S_step=ChangeType.change_S_I(mySQLiteImpl.recePedometerData(yestoday).get("step"));
-                    }
-                    mySQLiteImpl.updatePedometerData(S_step, yestoday);
+            if (mySQLiteImpl.isPedometerData(String.valueOf(Integer.valueOf(today) - 1))) {
+                if (ChangeType.change_S_I(mySQLiteImpl.recePedometerData(yestoday).get("step")) <= StepDetector.CURRENT_SETP) {
+                    S_step = StepDetector.CURRENT_SETP;
                 } else {
-                    mySQLiteImpl.addPedometerData(StepDetector.CURRENT_SETP, yestoday);
+                    S_step = ChangeType.change_S_I(mySQLiteImpl.recePedometerData(yestoday).get("step"));
                 }
+                mySQLiteImpl.updatePedometerData(S_step, yestoday);
+            } else {
+                mySQLiteImpl.addPedometerData(StepDetector.CURRENT_SETP, yestoday);
+            }
 
 
             super.handleMessage(msg);

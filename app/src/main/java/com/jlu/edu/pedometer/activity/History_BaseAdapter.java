@@ -1,7 +1,6 @@
 package com.jlu.edu.pedometer.activity;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,7 @@ public class History_BaseAdapter extends BaseAdapter {
     private Context context;
     private int step_length = 40;
     private int weight = 60;
-    private int calories = 0;
-    private int total_step = 0;
+
 
     public History_BaseAdapter(Context context, List<PedometerData> list) {
         this.list = list;
@@ -72,12 +70,12 @@ public class History_BaseAdapter extends BaseAdapter {
             viewHolder.divider.setVisibility(View.GONE);
         }
         if (list.size() != 0) {
-            Log.i("---------", list.size() + "-----" + list.get(position).getTime() + "---" + list.get(position).getStep());
-            total_step = ChangeType.change_S_I(list.get(position).getStep());
+
+            int total_step = ChangeType.change_S_I(list.get(position).getStep());
             viewHolder.step.setText(total_step + "");
-            calories=(int) (weight * total_step * step_length * 0.01 * 0.01);
-            viewHolder.calories.setText(calories+"");
-            String time=list.get(position).getTime();
+            int calories = (int) (weight * total_step * step_length * 0.01 * 0.01);
+            viewHolder.calories.setText(calories + "");
+            String time = list.get(position).getTime();
             viewHolder.time.setText(TimeUtils.formatDate(time));
 
         }

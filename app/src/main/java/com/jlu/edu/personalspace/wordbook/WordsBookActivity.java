@@ -67,7 +67,7 @@ public class WordsBookActivity extends Activity{
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Intent intent = new Intent(WordsBookActivity.this, MainActivity.class);
-            intent.putExtra("temp",2);
+            intent.putExtra("temp",3);
             startActivity(intent);
             finish();
             return true;

@@ -13,6 +13,8 @@ import com.jlu.edu.dictionary.DictionaryActivity;
 import com.jlu.edu.interest.InterestActivity;
 import com.jlu.edu.pedometer.activity.PedometerActivity;
 
+import utils.SysActivity;
+
 /**
  * Created by zhengheming on 2016/1/10.
  */
@@ -56,23 +58,25 @@ public class Fragment_main_three extends Fragment {
             switch (v.getId()) {
                 case R.id.three_interest:
                     if(getActivity()!=null) {
+                        SysActivity.getInstance().exit("InterestActivity");
                         Intent intent = new Intent(getActivity(), InterestActivity.class);
                         startActivity(intent);
-                        getActivity().finish();
+
                     }
                     break;
                 case R.id.three_pedometer:
                     if(getActivity()!=null) {
+                        SysActivity.getInstance().exit("PedometerActivity");
                         Intent intent = new Intent(getActivity(), PedometerActivity.class);
                         startActivity(intent);
-                        getActivity().finish();
+
                     }
                     break;
                 case R.id.three_dictionary:
                     if(getActivity()!=null) {
+                        SysActivity.getInstance().exit("DictionaryActivity");
                         Intent intent = new Intent(getActivity(), DictionaryActivity.class);
                         startActivity(intent);
-                        getActivity().finish();
                     }
                     break;
 

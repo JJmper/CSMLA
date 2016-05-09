@@ -13,6 +13,8 @@ import com.jlu.edu.fragment.Fragment_main_one;
 import com.jlu.edu.fragment.Fragment_main_three;
 import com.jlu.edu.fragment.Fragment_main_two;
 
+import utils.SysActivity;
+
 /**
  * Created by zhengheming on 2015/12/26.
  */
@@ -32,6 +34,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SysActivity.getInstance().addActivity("MainActivity",MainActivity.this);
         init();
         gragment_init();
         click();

@@ -3,7 +3,6 @@ package com.jlu.edu.register;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -39,24 +39,22 @@ import utils.Net;
 import utils.PatternAuth;
 import utils.SelectPicPopupWindow;
 import utils.SpUtil;
+import utils.SysActivity;
 import utils.UrlPath;
 
 /**
  * Created by zhengheming on 2015/12/26.
  */
 public class RegisterActivity extends Activity {
-    private static final String TAG = RegisterActivity.class.getName();
     private static final int PHOTO_REQUEST_CAMERA = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3;// 结果
     private CircularImage portrait;
     private EditText number;
-    private TextView text;
     private EditText name;
     private EditText password;
     private EditText email;
     private Button register;
-    private boolean menu_display;
     private PopupWindow menuWindow;
     private Bitmap bitmap;
     /* 头像名称 */
@@ -77,6 +75,7 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        SysActivity.getInstance().addActivity("RegisterActivity", RegisterActivity.this);
         init();
         click();
 
@@ -94,11 +93,11 @@ public class RegisterActivity extends Activity {
         Usersex = new SpUtil("User").send().getString("Usersex", "boy");
         portrait = (CircularImage) findViewById(R.id.register_portrait);
         number = (EditText) findViewById(R.id.register_number);
-        text = (TextView) findViewById(R.id.register_text);
+        TextView text = (TextView) findViewById(R.id.register_text);
         if ("student".equals(Userclassify)) {
             Usertext = "学号";
         } else if ("teacher".equals(Userclassify)) {
-            Usertext = "教学号";
+            Usertext = "QQ号码/手机号码";
         }
         text.setText(Usertext);
         name = (EditText) findViewById(R.id.register_name);
@@ -123,17 +122,19 @@ public class RegisterActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (!new Net().isNetworkAvailable(RegisterActivity.this)) {
+                if (!Net.isNetworkAvailable(RegisterActivity.this)) {
                     Toast.makeText(RegisterActivity.this, "无网络连接", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //将图片转成bitmap
-                Bitmap f = ((BitmapDrawable) portrait.getDrawable()).getBitmap();
-                if (f != null) {
-                    getInputstream(f);
-                } else {
-                    Toast.makeText(RegisterActivity.this, "----", Toast.LENGTH_SHORT).show();
+                //   Bitmap f = ((BitmapDrawable) portrait.getDrawable()).getBitmap();
+
+                if (bitmap == null) {
+                    Toast.makeText(RegisterActivity.this, "请添加头像", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                getInputstream(bitmap);
+
 
                 //头像获取并验证
                 if (Userportrait != null) {
@@ -146,9 +147,9 @@ public class RegisterActivity extends Activity {
 
                         Username = name.getText().toString().trim();
                         //昵称获取并验证
-                        if (PatternAuth.getAuth(Username, "[a-zA-Z0-9_]{3,10}")) {
+                        if (PatternAuth.getAuth(Username, "[a-zA-Z]{3,10}")||PatternAuth.getAuth(Username, "[\\u4e00-\\u9fa5]{2,5}")) {
 
-                            //性别获取并验证----默认
+                                       //性别获取并验证----默认
 
                             //学院获取并验证
 
@@ -171,7 +172,7 @@ public class RegisterActivity extends Activity {
                             }
 
                         } else {
-                            Toast.makeText(RegisterActivity.this, "昵称未设置或格式错误", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "昵称必须是字母(3-10)或者中文(3-5)", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(RegisterActivity.this, Usertext + "未设置或格式错误", Toast.LENGTH_SHORT).show();
@@ -193,13 +194,14 @@ public class RegisterActivity extends Activity {
             public void handleMessage(Message msg) {
                 Toast.makeText(getApplicationContext(), "注册成功",
                         Toast.LENGTH_LONG).show();
+                SysActivity.getInstance().exit("LoginActivity", "Register_school", "ClassifyActivity");
                 new SpUtil("User").save().putString("Usernumber", Usernumber).putString("Userpassword", Userpassword).commit();
                 new User_http(Usernumber).AsyncHttpService();
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 RegisterActivity.this.startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in,
                         R.anim.push_left_out);
-                RegisterActivity.this.finish();
+               finish();
 
 
             }
@@ -295,9 +297,9 @@ public class RegisterActivity extends Activity {
         } else if (requestCode == PHOTO_REQUEST_CUT) {
             try {
                 bitmap = data.getParcelableExtra("data");
-                this.portrait.setImageBitmap(bitmap);
-                boolean delete = tempFile.delete();
-                System.out.println("delete = " + delete);
+                portrait.setImageBitmap(bitmap);
+                boolean flag = tempFile.delete();
+                Log.i("TAG", flag + "");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -318,25 +320,18 @@ public class RegisterActivity extends Activity {
             byte[] buffer = out.toByteArray();
             byte[] encode = Base64.encode(buffer, Base64.DEFAULT);
             String photo = new String(encode);
-            if (photo != null && !photo.trim().equals("")) {
-                ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(photo.getBytes());
-                Userportrait = tInputStringStream;
-
+            if (!photo.trim().equals("")) {
+                Userportrait = new ByteArrayInputStream(photo.getBytes());
             }
             out.flush();
             out.close();
         } catch (IOException e) {
-            new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     /**
      * 剪切图片
-     *
-     * @param uri
-     * @function:
-     * @author:Jerry
-     * @date:2013-12-30
      */
     private void crop(Uri uri) {
         // 裁剪图片意图
@@ -357,12 +352,7 @@ public class RegisterActivity extends Activity {
     }
 
     private boolean hasSdcard() {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 }
 

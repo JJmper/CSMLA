@@ -2,7 +2,6 @@ package com.jlu.edu.pedometer.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import com.jlu.edu.pedometer.data.bean.PedometerData;
 import java.util.List;
 
 import SQLite.MySQLiteImpl;
+import utils.SysActivity;
 
 /**
  * 步行的历史纪录
@@ -21,24 +21,23 @@ import SQLite.MySQLiteImpl;
  */
 public class HistoryActivity extends Activity {
     private static final String TAG=HistoryActivity.class.getName();
-    private ListView listView;
-    private List<PedometerData> list;
     private TextView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedometer_history);
+        SysActivity.getInstance().addActivity("HistoryActivity",HistoryActivity.this );
         init();
         inits();
     }
 
     private void init() {
         back= (TextView) findViewById(R.id.pedometer_history_back);
-        list=new MySQLiteImpl().recePedometerData();
+        List<PedometerData>  list=new MySQLiteImpl().recePedometerData();
         if(list.size()==0){
             Toast.makeText(HistoryActivity.this,"暂无数据",Toast.LENGTH_SHORT).show();
         }
-        listView= (ListView) findViewById(R.id.pedometer_history_listview);
+        ListView  listView= (ListView) findViewById(R.id.pedometer_history_listview);
         listView.setAdapter(new History_BaseAdapter(this, list));
     }
 
@@ -50,14 +49,5 @@ public class HistoryActivity extends Activity {
             }
         });
     }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            finish();
-            return true;
-        }
-        return false;
-
-    }
 }

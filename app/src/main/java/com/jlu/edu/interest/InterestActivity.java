@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import com.jlu.edu.csmla.R;
 import com.jlu.edu.domain.Interest_comment;
 import com.jlu.edu.domain.Interest_data;
-import com.jlu.edu.main.MainActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -33,6 +31,7 @@ import utils.Comment_PopupWindow;
 import utils.LodingDialog;
 import utils.Net;
 import utils.SpUtil;
+import utils.SysActivity;
 import utils.UrlPath;
 
 /**
@@ -46,9 +45,6 @@ import utils.UrlPath;
  * 问题三：数据库 操作  只保留五条最新数据（五条信息及若干评论信息） ，在没有网络时调用。
  * <p/>
  * 在有网络时 先清空数据库 ，再插入最新数据（五条）
- * <p/>
- * <p/>
- * <p/>
  * <p/>
  * <p/>
  * Created by zhengheming on 2016/1/11.
@@ -73,10 +69,11 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interest);
-
+        SysActivity.getInstance().addActivity("InterestActivity", InterestActivity.this);
         init();
         initImpl();
         click();
+
     }
 
     private void init() {
@@ -97,7 +94,7 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
     private void initImpl() {
         if (Net.isNetworkAvailable(InterestActivity.this)) {
             dialog.show();
-            ReceInterest(0, 5, 2);
+            ReceInterest(0, 2);
         } else {
             list = mySQLite.receInterestData(0, 5);
         }
@@ -111,32 +108,15 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
 
                 Intent intent = new Intent(InterestActivity.this, SendMessageActivity.class);
                 startActivity(intent);
-                finish();
+
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InterestActivity.this, MainActivity.class);
-                intent.putExtra("temp", 2);
-                startActivity(intent);
                 finish();
             }
         });
-
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Intent intent = new Intent(InterestActivity.this, MainActivity.class);
-            intent.putExtra("temp", 2);
-            startActivity(intent);
-            finish();
-            return true;
-        }
-        return false;
 
     }
 
@@ -247,17 +227,25 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
                 case 0:
                     //刷新成功
                     adapter.onDateChange(list);
+                    if (list.size() == 0) {
+                        Toast.makeText(InterestActivity.this, "暂无数据", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(InterestActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+                    }
                     onloadtemp = 5;
                     listView.refleshComplete();
                     break;
                 case 1:
-                    //加载成功
+                    Toast.makeText(InterestActivity.this, "加载成功", Toast.LENGTH_SHORT).show();
                     onloadtemp = onloadtemp + 5;
                     adapter.onDateChange(list);
                     listView.loadComplete();
                     break;
                 case 2:
                     //第一次进入获取数据
+                    if (list.size() == 0) {
+                        Toast.makeText(InterestActivity.this, "暂无数据", Toast.LENGTH_SHORT).show();
+                    }
                     onloadtemp = 5;
                     adapter.onDateChange(list);
                     dialog.dismiss();
@@ -270,15 +258,19 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
                     break;
                 case 5:
                     //刷新
-                    ReceInterest(0, 5, 0);
+                    ReceInterest(0, 0);
                     break;
                 case 6:
                     //加载
-                    ReceInterest(onloadtemp, onloadtemp + 5, 1);
+                    ReceInterest(onloadtemp, 1);
                     break;
                 case 7:
                     adapter.onDateChange(list);
-                    Toast.makeText(InterestActivity.this, "已加载全部", Toast.LENGTH_SHORT).show();
+                    if (list.size() == 0) {
+                        Toast.makeText(InterestActivity.this, "暂无数据", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(InterestActivity.this, "已加载全部", Toast.LENGTH_SHORT).show();
+                    }
                     listView.loadComplete();
                     break;
             }
@@ -286,9 +278,9 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
 
     };
 
-    private void ReceInterest(final int start, int end, final int type) {
+    private void ReceInterest(final int start, final int type) {
         AsyncHttpClient Client = new AsyncHttpClient();
-        String url = UrlPath.ReceInterestData + "?start=" + start + "&end=" + end;
+        String url = UrlPath.ReceInterestData + "?start=" + start;
         Client.get(url, new AsyncHttpResponseHandler() {
 
             @Override

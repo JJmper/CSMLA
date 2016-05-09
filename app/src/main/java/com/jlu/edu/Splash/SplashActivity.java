@@ -3,7 +3,6 @@ package com.jlu.edu.Splash;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -15,6 +14,7 @@ import com.jlu.edu.main.MainActivity;
 import com.jlu.edu.register.LoginActivity;
 
 import utils.SpUtil;
+import utils.SysActivity;
 
 /**
  * Created by zhengheming on 2015/12/26.
@@ -26,11 +26,11 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
+        SysActivity.getInstance().addActivity("SplashActivity",SplashActivity.this);
         flag = new SpUtil("first_input").send().getBoolean("first_input", false);
         logoImage = (ImageView) findViewById(R.id.splash);
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.1f, 1.0f);

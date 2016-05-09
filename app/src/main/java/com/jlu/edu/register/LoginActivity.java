@@ -25,9 +25,11 @@ import java.lang.ref.WeakReference;
 import utils.DesUtils;
 import utils.Net;
 import utils.SpUtil;
+import utils.SysActivity;
 import utils.UrlPath;
 
 /**
+ *
  * Created by zhengheming on 2015/12/27.
  */
 public class LoginActivity extends Activity {
@@ -38,16 +40,16 @@ public class LoginActivity extends Activity {
     private CheckBox checkBox;
     private Button login_login;
     private Button login_register;
-    private String usernumber;
-    private String userpassword;
     private static String edit_number;
     private static String edit_password;
     private final MyHandler mHandler = new MyHandler(this);
-    private DesUtils des =null;
+    private DesUtils des = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SysActivity.getInstance().addActivity("LoginActivity", LoginActivity.this);
         init();
         click();
     }
@@ -58,12 +60,12 @@ public class LoginActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        SharedPreferences sp=new SpUtil("User").send();
-        usernumber = sp.getString("Usernumber", "");
-        userpassword = sp.getString("Userpassword", "");
+        SharedPreferences sp = new SpUtil("User").send();
+        String usernumber = sp.getString("Usernumber", "");
+        String userpassword = sp.getString("Userpassword", "");
         number = (EditText) findViewById(R.id.login_number);
         String classify = new SpUtil("User").send().getString("Userclassify", "student");
-        String cla = null;
+        String cla;
         if ("student".equals(classify)) {
             cla = "学号";
         } else {
@@ -75,7 +77,7 @@ public class LoginActivity extends Activity {
         password.setText(userpassword);
         forget_password = (TextView) findViewById(R.id.login_forget);
         checkBox = (CheckBox) findViewById(R.id.login_remember_checkbox);
-        if(!"".equals(userpassword)){
+        if (!"".equals(userpassword)) {
             checkBox.setChecked(true);
         }
         login_register = (Button) findViewById(R.id.login_register);
@@ -86,13 +88,13 @@ public class LoginActivity extends Activity {
         login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!new Net().isNetworkAvailable(LoginActivity.this)){
-                    Toast.makeText(LoginActivity.this,"无网络连接",Toast.LENGTH_SHORT).show();
+                if (!Net.isNetworkAvailable(LoginActivity.this)) {
+                    Toast.makeText(LoginActivity.this, "无网络连接", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 edit_number = number.getText().toString().trim();
                 edit_password = password.getText().toString().trim();
-                if (edit_number != null && edit_password != null)
+                if (edit_number != null && !"".equals(edit_number) && !"".equals(edit_password))
                     Login_get();
             }
         });
@@ -101,13 +103,12 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, Register_school.class);
                 startActivity(intent);
-                finish();
             }
         });
         forget_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,ForgetPassword.class);
+                Intent intent = new Intent(LoginActivity.this, ForgetPassword.class);
                 startActivity(intent);
             }
         });
@@ -150,7 +151,7 @@ public class LoginActivity extends Activity {
         private final WeakReference<LoginActivity> mActivity;
 
         public MyHandler(LoginActivity activity) {
-            mActivity = new WeakReference<LoginActivity>(activity);
+            mActivity = new WeakReference<>(activity);
         }
 
         @Override
@@ -161,9 +162,9 @@ public class LoginActivity extends Activity {
                     if (msg.what == 1) {
                         new SpUtil("User").save().putString("UserToken", msg.getData().getString("res")).putString("Usernumber", edit_number).putString("Userpassword", edit_password).commit();
                     }
-                    if(activity.checkBox.isChecked()){
+                    if (activity.checkBox.isChecked()) {
                         new SpUtil("User").save().putString("Usernumber", edit_number).putString("Userpassword", edit_password).commit();
-                    }else{
+                    } else {
                         new SpUtil("User").save().putString("Usernumber", edit_number).putString("Userpassword", "").commit();
                     }
                     Toast.makeText(activity, "登陆成功",

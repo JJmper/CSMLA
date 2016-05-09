@@ -38,6 +38,7 @@ import utils.GetBitmap;
 import utils.Net;
 import utils.SelectPicPopupWindow;
 import utils.SpUtil;
+import utils.SysActivity;
 import utils.UrlPath;
 
 
@@ -113,8 +114,6 @@ public class SendMessageActivity extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SendMessageActivity.this, InterestActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -128,11 +127,12 @@ public class SendMessageActivity extends Activity {
             public void handleMessage(Message msg) {
                 Toast.makeText(getApplicationContext(), "发表成功",
                         Toast.LENGTH_LONG).show();
+                SysActivity.getInstance().exit("InterestActivity");
                 Intent intent = new Intent(SendMessageActivity.this, InterestActivity.class);
                 SendMessageActivity.this.startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in,
                         R.anim.push_left_out);
-                SendMessageActivity.this.finish();
+                finish();
 
 
             }
@@ -142,12 +142,12 @@ public class SendMessageActivity extends Activity {
         AsyncHttpClient client = new AsyncHttpClient();
         String Url;
         RequestParams params = new RequestParams();
-        if(flag){
+        if (flag) {
             Url = UrlPath.AddInterestNO;
             params.put("Interestnumber", name);
             params.put("Interesttime", String.valueOf(time));
             params.put("Interestcontent", content);
-        }else{
+        } else {
             Url = UrlPath.AddInterestData;
             params.put("Interestnumber", name);
             params.put("Interesttime", String.valueOf(time));
@@ -213,7 +213,7 @@ public class SendMessageActivity extends Activity {
             if (data != null) {
                 // 得到图片的全路径
                 Uri uri = data.getData();
-                bitmap = new GetBitmap().returnBitmap(SendMessageActivity.this,uri);
+                bitmap = new GetBitmap().returnBitmap(SendMessageActivity.this, uri);
                 this.picture.setImageBitmap(bitmap);
 
             }
@@ -226,19 +226,9 @@ public class SendMessageActivity extends Activity {
                 this.picture.setImageBitmap(bitmap);
                 tempFile.delete();
 
-               // crop(Uri.fromFile(tempFile));
+                // crop(Uri.fromFile(tempFile));
             } else {
                 Toast.makeText(SendMessageActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_SHORT).show();
-            }
-
-        } else if (requestCode == PHOTO_REQUEST_CUT) {
-            try {
-                bitmap = data.getParcelableExtra("data");
-                this.picture.setImageBitmap(bitmap);
-                boolean delete = tempFile.delete();
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
 
         }
@@ -257,51 +247,20 @@ public class SendMessageActivity extends Activity {
             byte[] buffer = out.toByteArray();
             byte[] encode = Base64.encode(buffer, Base64.DEFAULT);
             String photo = new String(encode);
-            if (photo != null && !photo.trim().equals("")) {
-
-                ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(photo.getBytes());
-                image = tInputStringStream;
-
+            if (!photo.trim().equals("")) {
+                image = new ByteArrayInputStream(photo.getBytes());
             }
             out.flush();
             out.close();
         } catch (IOException e) {
-            new RuntimeException(e);
+           e.printStackTrace();
         }
     }
 
-    /**
-     * 剪切图片
-     *
-     * @param uri
-     * @function:
-     * @author:Jerry
-     * @date:2013-12-30
-     */
-    private void crop(Uri uri) {
-        // 裁剪图片意图
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        // 裁剪框的比例，1：1
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // 裁剪后输出图片的尺寸大小
-        intent.putExtra("outputX", 250);
-        intent.putExtra("outputY", 250);
-        // 图片格式
-        intent.putExtra("outputFormat", "JPEG");
-        intent.putExtra("noFaceDetection", true);// 取消人脸识别
-        intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
-        startActivityForResult(intent, PHOTO_REQUEST_CUT);
-    }
 
     private boolean hasSdcard() {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
+        return Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED);
+
     }
 }

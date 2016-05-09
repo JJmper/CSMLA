@@ -14,6 +14,7 @@ import com.jlu.edu.csmla.R;
 import java.io.InputStream;
 
 import utils.SpUtil;
+import utils.SysActivity;
 
 /**
  * Created by zhengheming on 2015/12/31.
@@ -29,11 +30,10 @@ public class ClassifyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_classify);
+        SysActivity.getInstance().addActivity("ClassifyActivity", ClassifyActivity.this);
         init();
         click();
     }
-
-
     private void init() {
         student01 = (ImageView) findViewById(R.id.classify_student01);
         student02 = (ImageView) findViewById(R.id.classify_student02);
@@ -56,7 +56,6 @@ public class ClassifyActivity extends Activity {
         new SpUtil("User").save().putString("Userclassify", classify).putString("Usersex", sex).commit();
         Intent intent = new Intent(ClassifyActivity.this, RegisterActivity.class);
         startActivity(intent);
-        finish();
     }
 
     View.OnClickListener MyOnClickListener = new View.OnClickListener() {

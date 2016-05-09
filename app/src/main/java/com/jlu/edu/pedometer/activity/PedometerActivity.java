@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jlu.edu.csmla.R;
-import com.jlu.edu.main.MainActivity;
 import com.jlu.edu.pedometer.service.SaveService;
 import com.jlu.edu.pedometer.service.StepDetector;
 import com.jlu.edu.pedometer.service.StepService;
@@ -20,10 +19,12 @@ import com.jlu.edu.pedometer.utils.CircleBar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 import SQLite.MySQLiteImpl;
 import utils.SpUtil;
+import utils.SysActivity;
 
 /**
  * 计步器基本功能
@@ -34,35 +35,20 @@ import utils.SpUtil;
  */
 public class PedometerActivity extends Activity implements OnClickListener {
     private CircleBar circleBar;
-    private TextView back;
-    private ImageView history;
     private int total_step = 0;
     private Thread thread;
     private int Type = 1;
-    private int calories = 0;
     private int step_length = 40;
     private int weight = 60;
-    private SimpleDateFormat sdf;
     private String today;
     private MySQLiteImpl mySQLiteImpl;
 
-    Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            total_step = StepDetector.CURRENT_SETP;
-            if (Type == 1) {
-                circleBar.setProgress(total_step, Type);
-            } else if (Type == 2) {
-                calories = (int) (weight * total_step * step_length * 0.01 * 0.01);
-                circleBar.setProgress(calories, Type);
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedometer);
+        SysActivity.getInstance().addActivity("PedometerActivity",PedometerActivity.this);
         init();
         mThread();
     }
@@ -92,8 +78,8 @@ public class PedometerActivity extends Activity implements OnClickListener {
 
 
     private void init() {
-        back = (TextView) findViewById(R.id.pedometer_back);
-        history = (ImageView) findViewById(R.id.pedometer_history);
+        TextView back = (TextView) findViewById(R.id.pedometer_back);
+        ImageView history = (ImageView) findViewById(R.id.pedometer_history);
         circleBar = (CircleBar) findViewById(R.id.pedometer_progress_pedometer);
         //开启后台service
         Intent intent1 = new Intent(PedometerActivity.this, StepService.class);
@@ -101,7 +87,7 @@ public class PedometerActivity extends Activity implements OnClickListener {
         Intent intent2 = new Intent(PedometerActivity.this, SaveService.class);
         startService(intent2);
         mySQLiteImpl = new MySQLiteImpl();
-        sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat  sdf = new SimpleDateFormat("yyyyMMdd", Locale.CHINESE);
         today = sdf.format(new Date());
         //true 如果数据库中含有今天数据  读取数据
         //false 如果是数据库中没有今天数据  默认数据
@@ -125,7 +111,6 @@ public class PedometerActivity extends Activity implements OnClickListener {
 
     private void mThread() {
         if (thread == null) {
-
             thread = new Thread(new Runnable() {
                 public void run() {
                     while (true) {
@@ -134,10 +119,10 @@ public class PedometerActivity extends Activity implements OnClickListener {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        if (true) {
+
                             Message msg = new Message();
                             handler.sendMessage(msg);
-                        }
+
                     }
                 }
             });
@@ -150,13 +135,11 @@ public class PedometerActivity extends Activity implements OnClickListener {
     public void onClick(View arg0) {
         switch (arg0.getId()) {
             case R.id.pedometer_back:
-                Intent intent = new Intent(PedometerActivity.this, MainActivity.class);
-                intent.putExtra("temp",2);
-                startActivity(intent);
                 finish();
                 break;
             case R.id.pedometer_history:
                 //跳转到历史
+                SysActivity.getInstance().exit("HistoryActivity");
                 Intent intent_history = new Intent(PedometerActivity.this, HistoryActivity.class);
                 startActivity(intent_history);
                 break;
@@ -173,5 +156,17 @@ public class PedometerActivity extends Activity implements OnClickListener {
                 break;
         }
     }
+    Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            total_step = StepDetector.CURRENT_SETP;
+            if (Type == 1) {
+                circleBar.setProgress(total_step, Type);
+            } else if (Type == 2) {
+                int  calories = (int) (weight * total_step * step_length * 0.01 * 0.01);
+                circleBar.setProgress(calories, Type);
+            }
+        }
+    };
 
 }
