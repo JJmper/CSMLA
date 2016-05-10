@@ -53,7 +53,7 @@ public class Fragment_main_four extends Fragment {
     private TextView exit;
     private String classify;
     private LodingDialog dialog;
-
+    private int temp=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main_four, container, false);
@@ -107,19 +107,16 @@ public class Fragment_main_four extends Fragment {
                     if (getActivity() != null) {
                         Intent intent = new Intent(getActivity(), PersonalMessage.class);
                         startActivity(intent);
-
                     }
                     break;
                 case R.id.main_four_pedometer_setting:
                     Intent intent = new Intent(getActivity(), PedometerSetting.class);
                     startActivity(intent);
-
                     break;
                 case R.id.main_four_wordbook:
                     if (getActivity() != null) {
                         Intent pedo = new Intent(getActivity(), WordsBookActivity.class);
                         startActivity(pedo);
-                        getActivity().finish();
                     }
                     break;
                 case R.id.main_four_course_check:
@@ -142,6 +139,7 @@ public class Fragment_main_four extends Fragment {
                     startActivity(about);
                     break;
                 case R.id.main_four_system_exit:
+
                     System.exit(0);
                     break;
                 default:
@@ -157,7 +155,6 @@ public class Fragment_main_four extends Fragment {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String res = new String(bytes);
-                Log.i("Fragment_four","success--->"+res);
                 if ("0".equals(res)) {
                     handler.sendEmptyMessage(0);
                 } else {
@@ -189,14 +186,12 @@ public class Fragment_main_four extends Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    Log.i("Fragment_four","success+0");
                     dialog.dismiss();
                     Intent upload = new Intent(getActivity(), UploadActivity.class);
                     upload.putExtra("type",0);
                     startActivity(upload);
                     break;
                 case 1:
-                    Log.i("Fragment_four","success+1");
                     dialog.dismiss();
                     Intent update = new Intent(getActivity(), FinishingActivity.class);
                     update.putExtra("emailname", (String) msg.obj);

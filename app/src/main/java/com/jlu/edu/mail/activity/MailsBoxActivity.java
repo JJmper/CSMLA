@@ -1,7 +1,6 @@
 package com.jlu.edu.mail.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +23,7 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
+import utils.LodingDialog;
 import utils.MyApplication;
 
 /**
@@ -36,7 +36,7 @@ public class MailsBoxActivity extends Activity {
     private List<Email> emails = new ArrayList<>();
     private ArrayList<ArrayList<InputStream>> attachmentsInputStreamsList = new ArrayList<>();
     private List<MailReceiver> mailMessages;
-    private ProgressDialog dialog;
+    private LodingDialog dialog;
     private MyBaseAdapter adapter;
 
 
@@ -56,8 +56,7 @@ public class MailsBoxActivity extends Activity {
     }
 
     private void initImpl() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("正在加载");
+        dialog = new LodingDialog(this);
         dialog.show();
         back.setOnClickListener(new View.OnClickListener() {
             @Override

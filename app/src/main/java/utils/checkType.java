@@ -12,11 +12,8 @@ public class checkType {
         String first = content.charAt(0) + "";
         Pattern p = Pattern.compile("[a-zA-Z]");
         Matcher m = p.matcher(first);
-        if (m.matches()) {
+        return m.matches();
 
-            return true;
-        }
-        return false;
 
     }
 
@@ -24,9 +21,8 @@ public class checkType {
         String first = content.charAt(0) + "";
         Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
         Matcher m = p.matcher(first);
-        if (m.matches()) {
-            return true;
-        }
-        return false;
+
+
+        return  m.matches();
     }
 }

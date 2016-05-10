@@ -1,7 +1,6 @@
 package com.jlu.edu.mail.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 import com.jlu.edu.csmla.R;
 import com.jlu.edu.mail.utils.HttpUtil;
 
+import utils.LodingDialog;
 import utils.MyApplication;
 import utils.Net;
 import utils.PatternAuth;
@@ -50,7 +50,7 @@ public class LoginMailsActivity extends Activity implements TextWatcher {
     private String userpsd;
     private CheckBox rememberpsd;
     private SharedPreferences sp;
-    private ProgressDialog dialog;
+    private LodingDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +154,7 @@ public class LoginMailsActivity extends Activity implements TextWatcher {
         MyApplication.info.setMailServerPort(port);
         MyApplication.info.setUserName(username);
         MyApplication.info.setPassword(userpsd);
-        dialog = new ProgressDialog(LoginMailsActivity.this);
-        dialog.setMessage("正在登入，请稍后");
+        dialog = new LodingDialog(LoginMailsActivity.this);
         dialog.show();
         new Thread() {
             @Override

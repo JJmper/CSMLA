@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import SQLite.MySQLiteImpl;
 import utils.MyApplication;
+import utils.SysActivity;
 
 /**
  * Created by zhengheming on 2016/2/3.
@@ -42,6 +43,7 @@ public class WordsDetailsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wordsdetails);
+        SysActivity.getInstance().addActivity("WordsDetailsActivity", WordsDetailsActivity.this);
         init();
         query();
         click();
@@ -67,8 +69,6 @@ public class WordsDetailsActivity extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WordsDetailsActivity.this, WordsBookActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -78,6 +78,7 @@ public class WordsDetailsActivity extends Activity {
     private void init() {
         mQueue = Volley.newRequestQueue(this);
         linearLayout = (LinearLayout) findViewById(R.id.words_linear_);
+        linearLayout.setVisibility(View.INVISIBLE);
         title = (TextView) findViewById(R.id.words_result_title);
         result = (TextView) findViewById(R.id.words_result);
         save = (ImageView) findViewById(R.id.words_save);
@@ -93,46 +94,57 @@ public class WordsDetailsActivity extends Activity {
 
                 @Override
                 public void onResponse(JSONObject jsonObject) {
-                    StringBuilder sb = null;
+                    StringBuilder sb = new StringBuilder();
                     try {
-                        String errorCode = jsonObject.getString("errorCode").toString();
-                        if (errorCode.equals("20")) {
-                            Toast.makeText(MyApplication.getAppContext(), "要翻译的文本过长", Toast.LENGTH_SHORT);
-                            return;
-                        } else if (errorCode.equals("30 ")) {
-                            Toast.makeText(MyApplication.getAppContext(), "无法进行有效的翻译", Toast.LENGTH_SHORT);
-                            return;
-                        } else if (errorCode.equals("40")) {
-                            Toast.makeText(MyApplication.getAppContext(), "不支持的语言类型", Toast.LENGTH_SHORT);
-                            return;
-                        } else if (errorCode.equals("50")) {
-                            Toast.makeText(MyApplication.getAppContext(), "无效的key", Toast.LENGTH_SHORT);
-                            return;
-                        } else if (errorCode.equals("0")) {
-
-                        } else {
-                            return;
+                        String errorCode = jsonObject.getString("errorCode");
+                        switch (errorCode) {
+                            case "20":
+                                Toast.makeText(MyApplication.getAppContext(), "要翻译的文本过长", Toast.LENGTH_SHORT).show();
+                                return;
+                            case "30":
+                                Toast.makeText(MyApplication.getAppContext(), "无法进行有效的翻译", Toast.LENGTH_SHORT).show();
+                                return;
+                            case "40":
+                                Toast.makeText(MyApplication.getAppContext(), "不支持的语言类型", Toast.LENGTH_SHORT).show();
+                                return;
+                            case "50":
+                                Toast.makeText(MyApplication.getAppContext(), "无效的key", Toast.LENGTH_SHORT).show();
+                                return;
+                            case "60":
+                                Toast.makeText(MyApplication.getAppContext(), "无词典结果" + content, Toast.LENGTH_SHORT).show();
+                                return;
+                            case "0":
+                                break;
+                            default:
+                                return;
                         }
-                        sb = new StringBuilder();
+
                         query = jsonObject.getString("query");
                         if (jsonObject.has("basic")) {
                             JSONObject basic = jsonObject
                                     .getJSONObject("basic");
                             if (basic.has("us-phonetic")) {
                                 String us_phonetic = basic.getString("us-phonetic");
-                                sb.append("美式音标：[" + us_phonetic + "]    ");
+                                sb.append("美式音标：[");
+                                sb.append(us_phonetic);
+                                sb.append("]    ");
                             }
                             if (basic.has("uk-phonetic")) {
                                 String uk_phonetic = basic.getString("uk-phonetic");
-                                sb.append("英式音标：[" + uk_phonetic + "]\n");
+                                sb.append("英式音标：[");
+                                sb.append(uk_phonetic);
+                                sb.append("]\n");
                             }
                             sb.append("\n");
-                            sb.append("释义:  " + jsonObject.getString("translation") + "\n");
+                            sb.append("释义:  ");
+                            sb.append(jsonObject.getString("translation"));
+                            sb.append("\n");
                             sb.append("\n");
                             if (basic.has("explains")) {
                                 JSONArray explains = basic.getJSONArray("explains");
                                 for (int i = 0; i < explains.length(); i++) {
-                                    sb.append(explains.getString(i) + "\n");
+                                    sb.append(explains.getString(i));
+                                    sb.append("\n");
                                 }
                             }
                         }
@@ -142,7 +154,8 @@ public class WordsDetailsActivity extends Activity {
                             JSONArray arr2 = jsonObject.getJSONArray("web");
                             for (int i = 0; i < arr2.length(); i++) {
                                 String key = arr2.getJSONObject(i).getString("key");
-                                sb.append(key + ":\n");
+                                sb.append(key);
+                                sb.append(":\n");
                                 JSONArray values = arr2.getJSONObject(i).getJSONArray("value");
                                 for (int j = 0; j < values.length(); j++) {
                                     sb.append(values.getString(j));
@@ -162,6 +175,7 @@ public class WordsDetailsActivity extends Activity {
                     }
                     title.setText(query);
                     result.setText(sb.toString());
+                    linearLayout.setVisibility(View.VISIBLE);
                 }
             }, new Response.ErrorListener() {
 
@@ -179,8 +193,6 @@ public class WordsDetailsActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Intent intent = new Intent(WordsDetailsActivity.this, WordsBookActivity.class);
-            startActivity(intent);
             finish();
             return true;
         }

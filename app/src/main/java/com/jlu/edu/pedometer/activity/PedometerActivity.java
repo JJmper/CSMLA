@@ -64,8 +64,6 @@ public class PedometerActivity extends Activity implements OnClickListener {
         super.onDestroy();
         saveDate();
     }
-
-
     private void saveDate() {
         //true 如果数据库中含有今天数据  更新数据
         //false 如果是数据库中没有今天数据  添加数据

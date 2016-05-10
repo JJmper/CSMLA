@@ -1,7 +1,6 @@
 package com.jlu.edu.dictionary;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.RadioButton;
@@ -9,8 +8,6 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.jlu.edu.csmla.R;
-import com.jlu.edu.interest.InterestActivity;
-import com.jlu.edu.main.MainActivity;
 
 /**
  * Created by zhengheming on 2016/1/31.
@@ -80,9 +77,6 @@ public class DictionaryActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Intent intent = new Intent(DictionaryActivity.this, MainActivity.class);
-            intent.putExtra("temp",2);
-            startActivity(intent);
             finish();
             return true;
         }

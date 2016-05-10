@@ -222,9 +222,10 @@ public class MySQLiteMethod implements MySQLiteInterface {
                     }
                     map.put(cols_name, cols_value);
                 }
-                cursor.close();
+
                 list.add(map);
             }
+            cursor.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -308,7 +309,6 @@ public class MySQLiteMethod implements MySQLiteInterface {
 
             sqLiteDatabase = mySQLiteOpenHelper.getWritableDatabase();
             Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
-
             while (cursor.moveToNext()) {
                 String cols_name = cursor.getColumnName(1);
                 String cols_value = cursor.getString(cursor
@@ -316,10 +316,10 @@ public class MySQLiteMethod implements MySQLiteInterface {
                 if (cols_value == null) {
                     cols_value = "";
                 }
-                cursor.close();
+
                 list.add(cols_value);
             }
-
+            cursor.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -390,9 +390,10 @@ public class MySQLiteMethod implements MySQLiteInterface {
                     }
                     map.put(cols_name, cols_value);
                 }
-                cursor.close();
+
                 list.add(map);
             }
+            cursor.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

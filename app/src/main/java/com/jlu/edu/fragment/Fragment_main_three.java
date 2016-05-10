@@ -16,6 +16,8 @@ import com.jlu.edu.pedometer.activity.PedometerActivity;
 import utils.SysActivity;
 
 /**
+ *
+ *
  * Created by zhengheming on 2016/1/10.
  */
 public class Fragment_main_three extends Fragment {
