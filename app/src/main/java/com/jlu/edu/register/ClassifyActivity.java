@@ -86,8 +86,7 @@ public class ClassifyActivity extends Activity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = false;
         //   options.inSampleSize = 2;   //width，hight设为原来的十分一
-        Bitmap btp = BitmapFactory.decodeStream(is, null, options);
-        return btp;
+        return BitmapFactory.decodeStream(is, null, options);
     }
 //回收内存
     protected void onDestroy() {

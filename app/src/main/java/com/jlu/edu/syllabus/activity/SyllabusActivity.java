@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +41,6 @@ public class SyllabusActivity extends Activity {
     private LinearLayout root;
     private TextView back;
     private TextView add;
-    private ScrollView scrollView;
     private List<Course> courseData[] = new ArrayList[7];
     private int itemHeight;
     private int marTop, marLeft;
@@ -73,7 +71,6 @@ public class SyllabusActivity extends Activity {
         root = (LinearLayout) findViewById(R.id.syllabus_contentPanel);
         back = (TextView) findViewById(R.id.syllabus_back);
         add = (TextView) findViewById(R.id.syllabus_add);
-        scrollView = (ScrollView) findViewById(R.id.syllabus_scrollview);
         back.setOnClickListener(MyOnClickListener);
         add.setOnClickListener(MyOnClickListener);
     }

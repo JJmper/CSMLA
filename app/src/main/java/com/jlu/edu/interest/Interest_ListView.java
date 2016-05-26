@@ -147,7 +147,6 @@ public class Interest_ListView extends ListView implements OnScrollListener {
                     startY = (int) ev.getY();
                 }
                 break;
-
             case MotionEvent.ACTION_MOVE:
                 onMove(ev);
                 break;
@@ -227,14 +226,12 @@ public class Interest_ListView extends ListView implements OnScrollListener {
                 arrow.clearAnimation();
                 topPadding(-headerHeight);
                 break;
-
             case PULL:
                 arrow.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
                 tip.setText("下拉可以刷新！");
                 arrow.clearAnimation();
                 arrow.setAnimation(anim1);
-
                 break;
             case RELESE:
                 arrow.setVisibility(View.GONE);
@@ -242,7 +239,6 @@ public class Interest_ListView extends ListView implements OnScrollListener {
                 tip.setText("松开可以刷新！");
                 arrow.clearAnimation();
                 arrow.setAnimation(anim);
-
                 break;
             case REFLASHING:
                 topPadding(50);
@@ -250,7 +246,6 @@ public class Interest_ListView extends ListView implements OnScrollListener {
                 progress.setVisibility(View.VISIBLE);
                 tip.setText("正在刷新...");
                 arrow.clearAnimation();
-
                 break;
         }
     }

@@ -55,17 +55,12 @@ public class StepDetector implements SensorEventListener {
 				}
 				int k = 0;
 				float v = vSum / 3;
-
-				float direction = (v > mLastValues[k] ? 1
-						: (v < mLastValues[k] ? -1 : 0));
+				float direction = (v > mLastValues[k] ? 1 : (v < mLastValues[k] ? -1 : 0));
 				if (direction == -mLastDirections[k]) {
 					// Direction changed
-					int extType = (direction > 0 ? 0 : 1); // minumum or
-															// maximum?
+					int extType = (direction > 0 ? 0 : 1); // minumum or// maximum?
 					mLastExtremes[extType][k] = mLastValues[k];
-					float diff = Math.abs(mLastExtremes[extType][k]
-							- mLastExtremes[1 - extType][k]);
-
+					float diff = Math.abs(mLastExtremes[extType][k] - mLastExtremes[1 - extType][k]);
 					if (diff > SENSITIVITY) {
 						boolean isAlmostAsLargeAsPrevious = diff > (mLastDiff[k] * 2 / 3);
 						boolean isPreviousLargeEnough = mLastDiff[k] > (diff / 3);
@@ -75,7 +70,6 @@ public class StepDetector implements SensorEventListener {
 								&& isNotContra) {
 							end = System.currentTimeMillis();
 							if (end - start > 500) {// 此时判断为走了一步
-
 								CURRENT_SETP++;
 								mLastMatch = extType;
 								start = end;
@@ -89,7 +83,6 @@ public class StepDetector implements SensorEventListener {
 				mLastDirections[k] = direction;
 				mLastValues[k] = v;
 			}
-
 		}
 	}
 	//当传感器的经度发生变化时就会调用这个方法，在这里没有用

@@ -73,15 +73,10 @@ public class TimerService extends Service {
                 if (MyApplication.list!=null&&MyApplication.list.size() != 0) {
                     for (Course course : MyApplication.list) {
                         date = new Date();
-                        Log.i("TimerService", course.getName());
                         long time = date.getTime();
                         long time_start = getLongTime(course.getStart(), 0);
                         long time_temp = getLongTime(course.getStart(), course.getStep());
-                        Log.i("TimerService", "----" + time);
-                        Log.i("TimerService", "----" + time_start);
-                        Log.i("TimerService", "----" + time_temp);
                         if (time_start > time) {
-                            Log.i("TimerService", "即将上课");
                             TimerService.title = "即将上课";
                             TimerService.syllabusname = course.getName();
                             TimerService.syllabustime = SyllabusTimeChange.Change(course.getStart());
@@ -89,7 +84,6 @@ public class TimerService extends Service {
                             TimerService.syllabusteacher = course.getTeacher();
                             break;
                         } else if (time_start <= time && time <= time_temp) {
-                            Log.i("TimerService", "正在上课");
                             TimerService.title = "正在上课";
                             TimerService.syllabusname = course.getName();
                             TimerService.syllabustime = SyllabusTimeChange.Change(course.getStart());

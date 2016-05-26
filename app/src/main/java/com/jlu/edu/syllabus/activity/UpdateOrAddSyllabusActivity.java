@@ -248,7 +248,6 @@ public class UpdateOrAddSyllabusActivity extends Activity implements PopupWindow
                     AddDataToService(last);
                     //二：如果是更新课程   先添加课程到服务器，和本地数据库，后删除之前数据
                     break;
-
             }
         }
     };

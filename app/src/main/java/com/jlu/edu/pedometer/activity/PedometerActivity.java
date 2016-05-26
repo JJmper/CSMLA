@@ -117,7 +117,6 @@ public class PedometerActivity extends Activity implements OnClickListener {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
                             Message msg = new Message();
                             handler.sendMessage(msg);
 

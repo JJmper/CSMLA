@@ -55,7 +55,7 @@ public class MySQLiteMethod implements MySQLiteInterface {
         boolean flag = false;
         SQLiteDatabase sqLiteDatabase = null;
         try {
-            String sql = "insert into comment ( interest_commentid ,interestid , interest_comment_active, interest_comment_passive,interest_comment_conten,interest_active_name,interest_passive_name) values(?,?,?,?,?,?,?)";
+            String sql = "insert into comment ( interest_commentid ,interestid , interest_comment_active, interest_comment_passive,interest_comment_content,interest_active_name,interest_passive_name) values(?,?,?,?,?,?,?)";
             sqLiteDatabase = mySQLiteOpenHelper.getWritableDatabase();
             sqLiteDatabase.execSQL(sql, params);
             flag = true;
@@ -488,7 +488,7 @@ public class MySQLiteMethod implements MySQLiteInterface {
         boolean flag = false;
         SQLiteDatabase sqLiteDatabase = null;
         try {
-            String sql = "delete from syllabus where name=?&&place=?&&teacher=?&&start=?&&step=?&&week=?";
+            String sql = "delete from syllabus where name=? and place=? and teacher=? and start=? and step=? and week=?";
             sqLiteDatabase = mySQLiteOpenHelper.getWritableDatabase();
             sqLiteDatabase.execSQL(sql, params);
             flag = true;

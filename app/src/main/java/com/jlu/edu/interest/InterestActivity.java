@@ -64,7 +64,8 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
     private int onloadtemp = 5;//加载计数
     private LodingDialog dialog;
     private boolean isAll = false;
-
+    private boolean isreply=false;
+    private String active;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +78,7 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
     }
 
     private void init() {
+        active=new SpUtil("User").send().getString("Usernumber", "");
         list = new ArrayList<>();
         mySQLite = new MySQLiteImpl();
         dialog = new LodingDialog(InterestActivity.this);
@@ -164,12 +166,16 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
         this.passive = passive;
         this.interestid = interestid;
         this.position = position;
-        menuWindow = new Comment_PopupWindow(InterestActivity.this, itemsOnClick, flag, passive);
-        menuWindow.showAtLocation(InterestActivity.this.findViewById(R.id.interest_), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        this.isreply=flag;
+        if(!active.equals(passive)){
+            menuWindow = new Comment_PopupWindow(InterestActivity.this,
+                    itemsOnClick, flag, passive);
+            menuWindow.showAtLocation(InterestActivity.this.findViewById(R.id.interest_),
+                    Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        }
+
 
     }
-
-
     private View.OnClickListener itemsOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -177,7 +183,11 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
                 case R.id.popup_commit:
                     String text = menuWindow.getEditText().getText().toString();
                     if (!"".equals(text)) {
-                        Comment_http(interestid, new SpUtil("User").send().getString("Usernumber", ""), passive, text);
+                        if(isreply){
+                            Comment_http(interestid, active, passive, text);
+                        }else{
+                            Comment_http(interestid, active, "NO", text);
+                        }
                         menuWindow.dismiss();
                     }
                     break;
@@ -418,7 +428,9 @@ public class InterestActivity extends Activity implements Interest_ListView.ILoa
         data.setList(lc);
         list.remove(position);
         list.add(position, data);
-        mySQLite.addInterestComment(interest_commentid + "", interest_id + "", interest_comment_active, interest_comment_passive, interest_comment_content, interest_active_name, interest_passive_name);
+        mySQLite.addInterestComment(interest_commentid + "",
+                interest_id + "", interest_comment_active, interest_comment_passive,
+                interest_comment_content, interest_active_name, interest_passive_name);
 
     }
 }

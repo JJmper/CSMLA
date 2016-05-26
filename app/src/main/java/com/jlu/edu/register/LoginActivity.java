@@ -22,6 +22,7 @@ import org.apache.http.Header;
 
 import java.lang.ref.WeakReference;
 
+import HttpUtils.User_http;
 import utils.DesUtils;
 import utils.Net;
 import utils.SpUtil;
@@ -138,7 +139,6 @@ public class LoginActivity extends Activity {
                     Toast.makeText(LoginActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                 Toast.makeText(LoginActivity.this, "连接超时", Toast.LENGTH_SHORT).show();
@@ -169,7 +169,7 @@ public class LoginActivity extends Activity {
                     }
                     Toast.makeText(activity, "登陆成功",
                             Toast.LENGTH_LONG).show();
-
+                    new User_http(edit_number).AsyncHttpService();
                     new SpUtil("first_input").save().putBoolean("first_input", true).commit();
                     Intent intent = new Intent(activity, MainActivity.class);
                     activity.startActivity(intent);

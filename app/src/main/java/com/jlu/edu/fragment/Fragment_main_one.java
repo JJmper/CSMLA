@@ -129,10 +129,10 @@ public class Fragment_main_one extends Fragment {
             lon = MyLocationListenner.longitude;
             lat = MyLocationListenner.latitude;
         }
-        if ("student".equals(classify)) {
-            named.setText("学生发送验证码");
-        } else {
+        if ("teacher".equals(classify)) {
             named.setText("教师发送验证码");
+        } else {
+            named.setText("学生发送验证码");
         }
         auth = (EditText) view.findViewById(R.id.main_one_auth);
         submit = (ImageView) view.findViewById(R.id.main_one_submit);
@@ -183,7 +183,6 @@ public class Fragment_main_one extends Fragment {
 
     private void mThread() {
         if (thread == null) {
-
             thread = new Thread(new Runnable() {
                 public void run() {
                     while (true) {
@@ -192,10 +191,10 @@ public class Fragment_main_one extends Fragment {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        if (true) {
+
                             Message msg = new Message();
                             handler.sendMessage(msg);
-                        }
+
                     }
                 }
             });

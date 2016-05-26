@@ -21,14 +21,15 @@ public class HttpUtil {
     }
 
     private Session isLoginRight(MailInfo info) {
-        //判断是否要登入验证
+
         MyAuthenricator authenticator = new MyAuthenricator(info.getUserName(), info.getPassword());
-        // 根据邮件会话属性和密码验证器构造一个发送邮件的session
+        // 根据邮件会话属性和密码验证器构造一个接收邮件的session
         Session session = Session.getDefaultInstance(info.getProperties(), authenticator);
         try {
             Store store;
             store = session.getStore(MyApplication.info.getType());
-            store.connect(MyApplication.info.getMailServerHost(), MyApplication.info.getUserName(), MyApplication.info.getPassword());
+            store.connect(MyApplication.info.getMailServerHost(),
+                    MyApplication.info.getUserName(), MyApplication.info.getPassword());
         } catch (MessagingException e) {
             e.printStackTrace();
             return null;

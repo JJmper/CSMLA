@@ -45,7 +45,7 @@ public class Interest_Adapter extends BaseAdapter {
     private ImageLoader mImageLoader;
     private SpannableString msp = null;
     private Comment comment;
-
+    private int posi;
     public Interest_Adapter(Context context, List<Interest_data> data) {
         this.context = context;
         this.data = data;
@@ -92,7 +92,8 @@ public class Interest_Adapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView( int position, View convertView, ViewGroup parent) {
+        posi=position;
         ViewHolder viewHolder = new ViewHolder();
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.interest_item, null);
@@ -139,6 +140,7 @@ public class Interest_Adapter extends BaseAdapter {
         if (image.equals("NO")) {
             viewHolder.item_image.setVisibility(View.GONE);
         } else {
+            viewHolder.item_image.setVisibility(View.VISIBLE);
             viewHolder.item_image.setImageUrl(UrlPath.picture + image, mImageLoader);
             viewHolder.item_image.setDefaultImageResId(R.mipmap.icon_empty);
         }
@@ -153,22 +155,23 @@ public class Interest_Adapter extends BaseAdapter {
                 String content = cd.getInterest_comment_content();
                 int act = active.length();
                 int pass = passive.length();
-                if (passive != null) {
+                if (!"NO".equals(passive)) {
                     msp = new SpannableString(active + "回复" + passive + ":" + content);
-                    msp.setSpan(new ForegroundColorSpan(Color.BLUE), 0, act, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色
-                    msp.setSpan(new ForegroundColorSpan(Color.BLUE), act + 2, act + pass + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色
+                    msp.setSpan(new ForegroundColorSpan(Color.BLUE), 0, act,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色
+                    msp.setSpan(new ForegroundColorSpan(Color.BLUE), act + 2, act + pass + 2,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色
                 } else {
                     msp = new SpannableString(active + ":" + content);
-                    msp.setSpan(new ForegroundColorSpan(Color.BLUE), 0, act, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //设置前景色
+                    msp.setSpan(new ForegroundColorSpan(Color.BLUE), 0, act,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //设置前景色
                 }
                 textView.setText(msp);
                 viewHolder.item_comment_data.addView(textView);
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        onComment(interestid, cd.getInterest_comment_active(), true,position);
-
+                        onComment(interestid, cd.getInterest_comment_active(), true,posi);
                     }
                 });
             }
@@ -177,7 +180,7 @@ public class Interest_Adapter extends BaseAdapter {
         viewHolder.item_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onComment(interestid, number, false,position);
+                onComment(interestid, number, false,posi);
             }
         });
         return convertView;

@@ -47,7 +47,6 @@ public class MainActivity extends Activity {
                 switch (checkedId) {
                     case R.id.main_bottom_one:
                         getFragmentManager().beginTransaction().replace(R.id.main_frame, fragment_main_one).commit();
-
                         break;
                     case R.id.main_bottom_two:
                         getFragmentManager().beginTransaction().replace(R.id.main_frame, fragment_main_two).commit();

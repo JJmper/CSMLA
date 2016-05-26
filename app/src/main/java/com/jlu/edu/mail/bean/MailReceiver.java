@@ -1,8 +1,6 @@
 
 package com.jlu.edu.mail.bean;
 
-import android.util.Log;
-
 import com.jlu.edu.mail.utils.TranCharsetUtil;
 
 import java.io.BufferedReader;
@@ -55,7 +53,7 @@ public class MailReceiver implements Serializable {
      */
     public String getFrom() throws Exception {
         String nameAddr = "";
-        InternetAddress address[] = (InternetAddress[]) mimeMessage.getFrom();
+        InternetAddress [] address = (InternetAddress[]) mimeMessage.getFrom();
         String addr = address[0].getAddress();
         String name = address[0].getPersonal();
         if (addr == null) {
@@ -76,7 +74,6 @@ public class MailReceiver implements Serializable {
         s = s.substring(0, s.indexOf("?="));
         s = s.substring(s.lastIndexOf('?') + 1, s.length());
         s = base64Decoder(s);
-
         return s;
     }
 
@@ -144,7 +141,6 @@ public class MailReceiver implements Serializable {
             }
         } catch (Exception e) {
         }
-        Log.i("----------=========>>",subject);
         return subject;
     }
 
@@ -201,7 +197,6 @@ public class MailReceiver implements Serializable {
      */
     private void compileMailContent(Part part) throws Exception {
         String contentType = part.getContentType();
-
         boolean connName = false;
         if (contentType.contains("name")) {
             connName = true;
@@ -233,7 +228,6 @@ public class MailReceiver implements Serializable {
             }
         } else if (part.getDisposition() != null && part.getDisposition().equals(Part.ATTACHMENT)) {
             // 获取附件
-
             String filename = part.getFileName();
             if (filename != null) {
                 if (filename.contains("=?gb18030?")) {
@@ -298,14 +292,12 @@ public class MailReceiver implements Serializable {
     }
 
     private String subType(String type) {
-        Log.i("----------=========>>",type);
         String res;
         if (type.contains("\"")) {
             res = type.substring(type.indexOf("=") + 2, type.length() - 1);
         }else{
             res = type.substring(type.indexOf("=") + 1, type.length());
         }
-        Log.i("----------=========>>",res);
         return res;
     }
 

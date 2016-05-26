@@ -2,6 +2,7 @@ package com.jlu.edu.interest;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -48,7 +49,6 @@ import utils.UrlPath;
 public class SendMessageActivity extends Activity {
     private static final int PHOTO_REQUEST_CAMERA = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
-    private static final int PHOTO_REQUEST_CUT = 3;// 结果
     private EditText content;
     private ImageView picture;
     private TextView send;
@@ -213,6 +213,9 @@ public class SendMessageActivity extends Activity {
             if (data != null) {
                 // 得到图片的全路径
                 Uri uri = data.getData();
+                // String temp=getRealPathFromURI(uri);
+                // bitmap= CondensePicture.getSmallBitmap(temp);
+
                 bitmap = new GetBitmap().returnBitmap(SendMessageActivity.this, uri);
                 this.picture.setImageBitmap(bitmap);
 
@@ -222,11 +225,10 @@ public class SendMessageActivity extends Activity {
             if (hasSdcard()) {
                 tempFile = new File(Environment.getExternalStorageDirectory(),
                         PHOTO_FILE_NAME);
+                // bitmap= CondensePicture.getSmallBitmap(tempFile.getPath());
                 bitmap = new GetBitmap().returnBitmap(SendMessageActivity.this, Uri.fromFile(tempFile));
                 this.picture.setImageBitmap(bitmap);
                 tempFile.delete();
-
-                // crop(Uri.fromFile(tempFile));
             } else {
                 Toast.makeText(SendMessageActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_SHORT).show();
             }
@@ -242,7 +244,7 @@ public class SendMessageActivity extends Activity {
 
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            bp.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            bp.compress(Bitmap.CompressFormat.JPEG, 60, out);
 
             byte[] buffer = out.toByteArray();
             byte[] encode = Base64.encode(buffer, Base64.DEFAULT);
@@ -253,7 +255,7 @@ public class SendMessageActivity extends Activity {
             out.flush();
             out.close();
         } catch (IOException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -262,5 +264,19 @@ public class SendMessageActivity extends Activity {
         return Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED);
 
+    }
+
+    //uri转成绝对路径
+    private String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            ;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
     }
 }

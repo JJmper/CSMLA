@@ -231,7 +231,7 @@ public class RegisterActivity extends Activity {
                 if ("1".equals(res)) {
                     handler.sendEmptyMessage(0);
                 } else if ("-1".equals(res)) {
-                    Toast.makeText(RegisterActivity.this, "该学号/教工号已被注册", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "该学号/QQ号/手机号已被注册", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(RegisterActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
                 }
